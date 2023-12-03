@@ -36,6 +36,8 @@ const imagesList = [
 ];
 
 const wrapperElement = document.querySelector("section.wrapper");
+const titlesList = imagesList.map(item => item.title);
+const textsList = imagesList.map(item => item.text);
 
 for (let i = 0; i < imagesList.length; i++){
     const newImgEl = document.createElement("img");
@@ -46,22 +48,30 @@ for (let i = 0; i < imagesList.length; i++){
 let activeIndex = 0;
 
 const imageEl = document.querySelectorAll("img");
+const titleElement = document.querySelector("h2.title");
+const textElement = document.querySelector("p.text");
+updateContent();
 imageEl [activeIndex].classList.add("active-img");
 
 const nextButton = document.querySelector("button.next");
 
 nextButton.addEventListener("click", function(){
     imageEl[activeIndex].classList.remove("active-img");
-    activeIndex = activeIndex + 1;
-    imageEl[activeIndex].classList.add("active-img")
+    activeIndex = (activeIndex + 1) % imagesList.length;
+    imageEl[activeIndex].classList.add("active-img");
  });
 
  const prevButton = document.querySelector("button.prev");
 
 prevButton.addEventListener("click", function(){
     imageEl[activeIndex].classList.remove("active-img");
-    activeIndex = activeIndex - 1;
-    imageEl[activeIndex].classList.add("active-img")
+    activeIndex = (activeIndex - 1 + imagesList.length) % imagesList.length;
+    imageEl[activeIndex].classList.add("active-img");
+    updateContent();
  });
 
+ function updateContent() {
+    titleElement.textContent = titlesList[activeIndex];
+    textElement.textContent = textsList[activeIndex];
+}
  
